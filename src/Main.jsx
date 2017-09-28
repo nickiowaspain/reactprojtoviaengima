@@ -10,13 +10,14 @@ const Main = (props) => {
           handleToggle={props.handleToggle}
           name={props.name}
           handleChange={props.handleChange}
-          multiline={props.multiline}
+          message={props.message}
           active={props.active}
           handleNameChange={props.handleNameChange}
           handleMessageChange={props.handleMessageChange}
           encryptMessage={props.encryptMessage}
           handleExpirationChange={props.handleExpirationChange}
           expirationDate={props.expirationDate}
+          decryptMessage={props.decryptMessage}
         />
         <div className="passphrase-container">
           <div className="your-passphrase">Your Passphrase - <a href="">{}</a></div>

@@ -14,13 +14,13 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.encryptMessage = this.encryptMessage.bind(this);
+    this.decryptMessage = this.decryptMessage.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleExpirationChange = this.handleExpirationChange.bind(this);
 
     this.state = {
       name: '',
-      multiline: '',
-      label: '',
+      message: '',
       active: false,
       expirationDate: null,
     };
@@ -49,8 +49,8 @@ class App extends Component {
   //   };
 
     handleMessageChange(newValue, event) {
-      console.log('22222', newValue)
-      this.setState({multiline: newValue});
+      console.log('newValue', newValue)
+      this.setState({message: newValue});
     }
 
     handleNameChange(newValue, event) {
@@ -64,12 +64,23 @@ class App extends Component {
     }
 
     encryptMessage() {
-      console.log('check this', this.state.multiline)
-      axios.post('http://localhost:3000/encrypt', {message: this.state.multiline })
-      .then(function (response) {
-        console.log('here is the response',response);
+      console.log('check this', this.state.message)
+      axios.post('http://localhost:3000/encrypt', this.state)
+      .then(response => {
+        console.log('here is the response:', response);
+        this.setState({active: true});
+        this.setState({message: response.data})
       })
+    }
 
+
+    decryptMessage() {
+      console.log('check this', this.state.message)
+      axios.post('http://localhost:3000/decrypt', {encryptedMsg: this.state.message})
+      .then(response => {
+        console.log('here is the response for decrypt:', response);
+        this.setState({message: response.data})
+      })
     }
 
   
@@ -81,11 +92,12 @@ class App extends Component {
           handleToggle={this.handleToggle}
           name={this.state.name}
           handleChange={this.handleChange}
-          multiline={this.state.multiline}
+          message={this.state.message}
           active={this.state.active}
           handleNameChange={this.handleNameChange}
           handleMessageChange={this.handleMessageChange}
           encryptMessage={this.encryptMessage}
+          decryptMessage={this.decryptMessage}
           handleExpirationChange={this.handleExpirationChange}
           expirationDate={this.state.expirationDate}
           />

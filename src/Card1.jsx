@@ -22,7 +22,7 @@ const Card1 = (props) => {
   
   const actions = [
     { label: 'Cancel', onClick: props.handleToggle },
-    { label: 'Decrypt', onClick: props.handleToggle },
+    { label: 'Decrypt', onClick: props.decryptMessage },
   ];
 
   return (
@@ -31,11 +31,11 @@ const Card1 = (props) => {
         title="Tovia's Enigma"
       />
       <div className="senders-name-container">
-        <span className="senders-first-letter">T</span>
+        <span className="senders-first-letter">{props.name.charAt(0).toUpperCase() || 'T'}</span>
         <Input required className="name-input" type="text" label="Name" name="name" value={props.name} onChange={props.handleNameChange} icon={<Lens className="lens" />} />
       </div>
       <div>
-        <Input type="text" multiline label="Message" required maxLength={120} value={props.multiline} onChange={props.handleMessageChange} />
+        <Input type="text" multiline label="Message" required maxLength={120} value={props.message} onChange={props.handleMessageChange} />
       </div>
       <div>
         <DatePicker
@@ -57,10 +57,11 @@ const Card1 = (props) => {
         onOverlayClick={props.handleToggle}
         title="Decrypt/Encrypt"
       >
-        <Input type="text" multiline label="Message" required value={props.multiline} onChange={props.saveMessage} />
+        <Input type="text" multiline label="Message" required value={props.message} onChange={props.handleMessageChange} />
       </Dialog>
     </Card>
   );
 };
 
 export default Card1;
+
