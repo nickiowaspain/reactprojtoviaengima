@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  .all-card {
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 20px;
+  }
+  
+  CardTitle {
+    font-size: 130px !important;
+    font-weight: 600;
+  }
+  
+  .senders-name-container {
+    margin-top: 20px;
+  }
+  
+  .lens {
+    color: darkgray !important;
+    width: 55px !important;
+    height: 55px !important;
+  }
+  
+  .senders-first-letter {
+    font-size: 30px;
+    position: relative;
+    right: -8px;
+    top: 3px;
+    z-index: 999;
+    color: white;
+  }
+  
+  .name-input {
+    display: inline-block;
+    position: relative;
+    top: -10px;
+  }
+  
+  .lFVgC._1nKdf {
+    margin-left: 40px !important;
+  }
+  
+  .passphrase-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .your-passphrase {
+    margin-bottom: 20px;
+  }
+  
+  .generate-passphrase {
+    text-decoration: none;
+    color: blue;
+  }
+  
+  .ZoLIG, .ZoLIG [data-react-toolbox=button] {
+    padding-left: 0 !important;
+    font-size: 18px !important;
+    color: #5A5A5A !important;
+    font-weight: 500 !important;
+  }

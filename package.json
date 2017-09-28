@@ -1,0 +1,50 @@
+{
+  "name": "tryme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server",
+    "toolbox": "react-toolbox-themr",
+    "server": "node server.js"
+  },
+  "author": "nick holtan",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.18.2",
+    "html-webpack-plugin": "^2.30.1",
+    "material-design-icons": "^3.0.1",
+    "material-ui": "^0.19.2",
+    "path": "^0.12.7",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
+    "react-material-icons": "^1.0.2",
+    "react-scripts": "1.0.13",
+    "react-tap-event-plugin": "^2.0.1",
+    "react-toolbox": "^2.0.0-beta.12",
+    "react-toolbox-themr": "^1.0.2",
+    "request": "^2.83.0",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.8.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.16",
+    "css-loader": "^0.28.7",
+    "csv-loader": "^2.1.1",
+    "express": "^4.15.5",
+    "file-loader": "^0.11.2",
+    "html-webpack-plugin": "^2.30.1",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.6.0",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-dev-server": "^2.8.2",
+    "xml-loader": "^1.2.1"
+  }
+}
