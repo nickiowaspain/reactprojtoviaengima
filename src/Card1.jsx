@@ -7,17 +7,6 @@ import { Card, CardTitle, CardActions } from 'react-toolbox/lib/card';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
 
 
-  //  state = { name: '', multiline: '', label: '', active: false};
-  
-    // handleChange = (name, value) => {
-    //   this.setState({...this.state, [name]: value});
-    // };
-
-    // handleToggle = () => {
-    //   this.setState({active: !this.state.active});
-    // }
-
-
 const Card1 = (props) => {
   
   const actions = [

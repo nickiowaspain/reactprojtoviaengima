@@ -20,8 +20,8 @@ const Main = (props) => {
           decryptMessage={props.decryptMessage}
         />
         <div className="passphrase-container">
-          <div className="your-passphrase">Your Passphrase - <a href="">{}</a></div>
-          <a className="generate-passphrase" href="">Generate new Passphrase {} </a>
+          <div className="your-passphrase">Your Passphrase - <a href="">{props.passphrase}</a></div>
+          <div className="generate-passphrase" onClick={props.generatePassphrase} >Generate new Passphrase {} </div>
         </div>
       </div>
     </MuiThemeProvider>

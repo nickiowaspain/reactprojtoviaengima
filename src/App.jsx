@@ -17,14 +17,30 @@ class App extends Component {
     this.decryptMessage = this.decryptMessage.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleExpirationChange = this.handleExpirationChange.bind(this);
+    this.generatePassphrase = this.generatePassphrase.bind(this);
 
     this.state = {
       name: '',
       message: '',
       active: false,
       expirationDate: null,
+      passphrase: null
     };
+  }
 
+  componentDidMount(){
+    this.generatePassphrase();
+  }
+
+  generatePassphrase() {
+    axios.get('/newPassphrase')
+    .then(response => {
+      this.setState({passphrase: response.data})
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   }
 
@@ -65,11 +81,12 @@ class App extends Component {
 
     encryptMessage() {
       console.log('check this', this.state.message)
+      if(!this.state.message || !this.state.name || !this.state.expirationDate){ return; }
       axios.post('http://localhost:3000/encrypt', this.state)
       .then(response => {
         console.log('here is the response:', response);
         this.setState({active: true});
-        this.setState({message: response.data})
+        this.setState({message: response.data});
       })
     }
 
@@ -78,8 +95,15 @@ class App extends Component {
       console.log('check this', this.state.message)
       axios.post('http://localhost:3000/decrypt', {encryptedMsg: this.state.message})
       .then(response => {
-        console.log('here is the response for decrypt:', response);
-        this.setState({message: response.data})
+        console.log('here is the response for decrypt:', response.data);
+        let splitResponse = response.data.split(' ');
+        let date = splitResponse.slice(-1).join(' ');
+        console.log('here da date', date)
+        let name = splitResponse.slice(-2,-1).join(' ');
+        console.log('here da name', name)
+        let fixedMessage = splitResponse.slice(0, -3).join(' ');
+      
+        this.setState({name: name, message: fixedMessage, expirationDate: date})
       })
     }
 
@@ -100,6 +124,8 @@ class App extends Component {
           decryptMessage={this.decryptMessage}
           handleExpirationChange={this.handleExpirationChange}
           expirationDate={this.state.expirationDate}
+          passphrase={this.state.passphrase}
+          generatePassphrase={this.generatePassphrase}
           />
         </div>
       </ThemeProvider>

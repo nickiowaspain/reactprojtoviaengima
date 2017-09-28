@@ -16,74 +16,68 @@ app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }));
 
-
 app.post('/encrypt', function(req,res) {
-  console.log('hit!!!!', req.body)
-  let result = runMe(req)
-  res.send(result)
-  // if(checkExpirationDate()) {
-  //   res.send('success')
-  // }
+  console.log('hit encrypt!!!!', req.body)
+  let encrypted = prepareAndEncrypt(req);
+  res.send(encrypted);
 })
 
 app.post('/decrypt', function(req,res) {
   console.log('decrypt hit!!!!', req.body.encryptedMsg)
-  let dec = decrypt(req.body.encryptedMsg)
-  if(checkExpirationDate(dec)) {
-    res.send(dec)
+  let decryptedStr = decrypt(req.body.encryptedMsg);
+  if(checkExpirationDate(decryptedStr)) {
+    res.send(decryptedStr);
   } else {
     res.send('Error')
   }
 })
 
-function runMe(request) {
+function prepareAndEncrypt(request) {
   console.log(request.body)
-  let str = request.body.message + ' extraData: ' + request.body.name + ' ' + request.body.expirationDate;
-  let encryptedData = encrypt(str)
+  let preparedStr = request.body.message + ' extraData: ' + request.body.name + ' ' + request.body.expirationDate;
+  let encryptedData = encrypt(preparedStr);
   console.log('encrypted:', encryptedData)
-  // let dec = decrypt(isIt)
-  // console.log('here is decry:', dec)
-  return encryptedData
+  return encryptedData;
 }
 
 function checkExpirationDate(str) {
-  let splitted = str.split(' ');
-  console.log('splitted:', splitted)
-  if(+Date.parse(splitted[splitted.length - 1]) > +Date.now()){
+  let splitStr = str.split(' ');
+  console.log('splitStr:', splitStr)
+  if(+Date.parse(splitStr[splitStr.length - 1]) > +Date.now()) {
     return true;
   }
   return false;
 }
 
+app.get('/newPassphrase', function(req,res) {
+  let passphrase = crypto.randomBytes(5).toString('base64').slice(0,5);
+  res.send(passphrase);
+}) 
 
 
 
 let algorithm = 'aes-256-ctr',
 password = 'd6F3Efeq';
 
-function encrypt(text){
-let cipher = crypto.createCipher(algorithm,password)
-let crypted = cipher.update(text,'utf8','hex')
-crypted += cipher.final('hex');
-return crypted;
+function encrypt(text) {
+  let cipher = crypto.createCipher(algorithm,password)
+  let crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
 }
 
-function decrypt(text){
-let decipher = crypto.createDecipher(algorithm,password)
-let dec = decipher.update(text,'hex','utf8')
-dec += decipher.final('utf8');
-return dec;
+function decrypt(text) {
+  let decipher = crypto.createDecipher(algorithm,password)
+  let dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
 }
 
-let hw = encrypt("hello world^^^" + Date.now().toString())
-// outputs hello world
-console.log(hw);
-console.log(decrypt(hw));
+// let hw = encrypt("hello world^^^" + Date.now().toString())
+// console.log(hw);
+// console.log(decrypt(hw));
 
 
-
-
-// Serve the files on port 3000.
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!\n');
+  console.log('Tovia app listening on port 3000!\n');
 });
