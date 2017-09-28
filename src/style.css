@@ -49,15 +49,15 @@ body {
     margin-top: 20px;
   }
   
-  .your-passphrase {
+  .your-passphrase  {
     margin-bottom: 20px;
   }
-  
-  .generate-passphrase {
+
+  .your-passphrase a, .generate-passphrase {
     text-decoration: none;
     color: blue;
   }
-  
+
   .ZoLIG, .ZoLIG [data-react-toolbox=button] {
     padding-left: 0 !important;
     font-size: 18px !important;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Card from './Card1.jsx';
+import Card from './Card.jsx';
 
 const Main = (props) => {
   return (
@@ -9,7 +9,6 @@ const Main = (props) => {
         <Card
           handleToggle={props.handleToggle}
           name={props.name}
-          handleChange={props.handleChange}
           message={props.message}
           active={props.active}
           handleNameChange={props.handleNameChange}
@@ -20,8 +19,8 @@ const Main = (props) => {
           decryptMessage={props.decryptMessage}
         />
         <div className="passphrase-container">
-          <div className="your-passphrase">Your Passphrase - <a href="">{props.passphrase}</a></div>
-          <div className="generate-passphrase" onClick={props.generatePassphrase} >Generate new Passphrase {} </div>
+          <div className="your-passphrase">Your Passphrase - <a>{props.passphrase}</a></div>
+          <a className="generate-passphrase" onClick={props.generatePassphrase} href="">Generate new Passphrase</a>
         </div>
       </div>
     </MuiThemeProvider>

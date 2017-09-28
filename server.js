@@ -34,18 +34,22 @@ app.post('/decrypt', function(req,res) {
 
 function prepareAndEncrypt(request) {
   console.log(request.body)
-  let preparedStr = request.body.message + ' extraData: ' + request.body.name + ' ' + request.body.expirationDate;
+  let preparedStr = request.body.message + ',' + request.body.name + ',' + request.body.expirationDate;
   let encryptedData = encrypt(preparedStr);
   console.log('encrypted:', encryptedData)
   return encryptedData;
 }
 
 function checkExpirationDate(str) {
-  let splitStr = str.split(' ');
+  let splitStr = str.split(',');
   console.log('splitStr:', splitStr)
-  if(+Date.parse(splitStr[splitStr.length - 1]) > +Date.now()) {
+  console.log('splitStr[2]', splitStr[2])
+  console.log('date now', Date.now())
+  if(+Date.parse(splitStr[2]) > +Date.now()) {
+    console.log('this is true!!1')
     return true;
   }
+  console.log('this is false!!!')
   return false;
 }
 

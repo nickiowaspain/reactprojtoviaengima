@@ -1,12 +1,5 @@
 class DialogTest extends React.Component {
-    // state = {
-    //   active: false
-    // };
-  
-    // handleToggle = () => {
-    //   this.setState({active: !this.state.active});
-    // }
-  
+    
     actions = [
       { label: "Cancel", onClick: this.handleToggle },
       { label: "Save", onClick: this.handleToggle }

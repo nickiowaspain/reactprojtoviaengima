@@ -1,5 +1,5 @@
 {
-  "name": "tryme",
+  "name": "tovia",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,6 +17,7 @@
     "html-webpack-plugin": "^2.30.1",
     "material-design-icons": "^3.0.1",
     "material-ui": "^0.19.2",
+    "moment": "^2.18.1",
     "path": "^0.12.7",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",

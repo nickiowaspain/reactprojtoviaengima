@@ -5,13 +5,13 @@ import './toolbox/theme.css';
 import theme from './toolbox/theme';
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
 import axios from 'axios';
+import moment from 'moment';
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.handleToggle = this.handleToggle.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.encryptMessage = this.encryptMessage.bind(this);
     this.decryptMessage = this.decryptMessage.bind(this);
@@ -34,79 +34,64 @@ class App extends Component {
 
   generatePassphrase() {
     axios.get('/newPassphrase')
-    .then(response => {
-      this.setState({passphrase: response.data})
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(response => {
+        this.setState({passphrase: response.data})
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
   }
 
   handleToggle() {
     this.setState({active: !this.state.active});
   }
-  // handleToggle = () => {
-  //   this.setState({active: !this.state.active});
-  // }
 
-  handleChange(name, value) {
-    // this.setState({...this.state, [name]: value});
-  };
-  // handleChange(e) {
-  //   console.log('e', e.target.value)
-  //   // console.log('value', value)
-  //   // this.setState({...this.state, [name]: value});
-  // };
+  handleMessageChange(newValue, event) {
+    console.log('newValue', newValue)
+    this.setState({message: newValue});
+  }
 
-  //  handleChange = (name, value) => {
-  //     // this.setState({...this.state, [name]: value});
-  //   };
+  handleNameChange(newValue, event) {
+    console.log('newValue', newValue)
+    this.setState({name: newValue});
+  }
 
-    handleMessageChange(newValue, event) {
-      console.log('newValue', newValue)
-      this.setState({message: newValue});
-    }
+  handleExpirationChange(newValue, event) {
+    console.log('newValue', newValue)
+    this.setState({expirationDate: newValue});
+  }
 
-    handleNameChange(newValue, event) {
-      console.log('newValue', newValue)
-      this.setState({name: newValue});
-    }
-
-    handleExpirationChange(newValue, event) {
-      console.log('newValue', newValue)
-      this.setState({expirationDate: newValue});
-    }
-
-    encryptMessage() {
-      console.log('check this', this.state.message)
-      if(!this.state.message || !this.state.name || !this.state.expirationDate){ return; }
-      axios.post('http://localhost:3000/encrypt', this.state)
+  encryptMessage() {
+    console.log('check this', this.state.message)
+    if(!this.state.message || !this.state.name || !this.state.expirationDate){ return; }
+    axios.post('http://localhost:3000/encrypt', this.state)
       .then(response => {
         console.log('here is the response:', response);
-        this.setState({active: true});
-        this.setState({message: response.data});
+        this.setState({active: true, message: response.data});
+        // this.setState({message: response.data});
       })
-    }
+  }
 
 
-    decryptMessage() {
-      console.log('check this', this.state.message)
-      axios.post('http://localhost:3000/decrypt', {encryptedMsg: this.state.message})
+  decryptMessage() {
+    console.log('check this', this.state.message)
+    axios.post('http://localhost:3000/decrypt', {encryptedMsg: this.state.message})
       .then(response => {
         console.log('here is the response for decrypt:', response.data);
-        let splitResponse = response.data.split(' ');
-        let date = splitResponse.slice(-1).join(' ');
+        let splitResponse = response.data.split(',');
+        console.log('splitResponse', splitResponse)
+        let date = splitResponse[2]
+        // let formattedDate = moment(date).format("DD MMM YY").toString();
         console.log('here da date', date)
-        let name = splitResponse.slice(-2,-1).join(' ');
+        let name = splitResponse[1]
         console.log('here da name', name)
-        let fixedMessage = splitResponse.slice(0, -3).join(' ');
-      
+        let fixedMessage = splitResponse[0]
         this.setState({name: name, message: fixedMessage, expirationDate: date})
+        console.log(this.state)
       })
-    }
-
+  }
   
   render() {
     return (

@@ -7,12 +7,14 @@ import { Card, CardTitle, CardActions } from 'react-toolbox/lib/card';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
 
 
-const Card1 = (props) => {
+const cardForm = (props) => {
   
   const actions = [
     { label: 'Cancel', onClick: props.handleToggle },
     { label: 'Decrypt', onClick: props.decryptMessage },
   ];
+
+  const firstLetter = props.name ? props.name.charAt(0) : 'T';
 
   return (
     <Card className="all-card" style={{ width: '500px' }}>
@@ -20,7 +22,7 @@ const Card1 = (props) => {
         title="Tovia's Enigma"
       />
       <div className="senders-name-container">
-        <span className="senders-first-letter">{props.name.charAt(0).toUpperCase() || 'T'}</span>
+        <span className="senders-first-letter">{firstLetter}</span>
         <Input required className="name-input" type="text" label="Name" name="name" value={props.name} onChange={props.handleNameChange} icon={<Lens className="lens" />} />
       </div>
       <div>
@@ -31,6 +33,7 @@ const Card1 = (props) => {
           label="Expiration date"
           sundayFirstDayOfWeek
           required
+          autoOk
           onChange={props.handleExpirationChange}
           value={props.expirationDate}
         />
@@ -52,5 +55,5 @@ const Card1 = (props) => {
   );
 };
 
-export default Card1;
+export default cardForm;
 

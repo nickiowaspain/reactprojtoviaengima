@@ -6,5 +6,5 @@ import App  from './App.jsx';
 
 // injectTapEventPlugin();
 
-ReactDOM.render(<App name="Goodness kayode" />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
