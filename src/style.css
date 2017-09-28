@@ -10,11 +10,6 @@ body {
     padding: 20px;
   }
   
-  CardTitle {
-    font-size: 130px !important;
-    font-weight: 600;
-  }
-  
   .senders-name-container {
     margin-top: 20px;
   }

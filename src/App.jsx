@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Main from './Main.jsx';
-// import './App.css';
 import './toolbox/theme.css';
 import theme from './toolbox/theme';
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
 import axios from 'axios';
-import moment from 'moment';
+// import moment from 'moment';
 
 
 class App extends Component {
@@ -18,6 +17,7 @@ class App extends Component {
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleExpirationChange = this.handleExpirationChange.bind(this);
     this.generatePassphrase = this.generatePassphrase.bind(this);
+    this.setPassphrase = this.setPassphrase.bind(this);
 
     this.state = {
       name: '',
@@ -28,15 +28,34 @@ class App extends Component {
     };
   }
 
-  componentDidMount(){
-    this.generatePassphrase();
+  componentDidMount() {
+    let myHash= location.hash;
+    if(location.hash.length > 1) {
+      this.setState({passphrase: myHash.slice(1)});
+      this.setPassphrase();
+    } else {
+      location.hash = '#' + this.generatePassphrase();
+    }
+
+    // attempt at removing readonly attribute on datePicker input in order to change value like the rest of the inputs 
+    // i've been able to change. 
+    // let element = document.getElementById("mine")
+    // element.removeAttribute("readonly");
+    // console.log(element)
+  }
+
+  setPassphrase() {
+    axios.post('http://localhost:3000/setPassphrase', {passphrase: location.hash.slice(1)})
+    .then(response => {
+      console.log('response for setPassphrase:', response);
+    })
   }
 
   generatePassphrase() {
     axios.get('/newPassphrase')
       .then(response => {
+        location.href = '#' + response.data;
         this.setState({passphrase: response.data})
-        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -49,47 +68,38 @@ class App extends Component {
   }
 
   handleMessageChange(newValue, event) {
-    console.log('newValue', newValue)
     this.setState({message: newValue});
   }
 
   handleNameChange(newValue, event) {
-    console.log('newValue', newValue)
     this.setState({name: newValue});
   }
 
   handleExpirationChange(newValue, event) {
-    console.log('newValue', newValue)
     this.setState({expirationDate: newValue});
   }
 
   encryptMessage() {
-    console.log('check this', this.state.message)
     if(!this.state.message || !this.state.name || !this.state.expirationDate){ return; }
     axios.post('http://localhost:3000/encrypt', this.state)
       .then(response => {
-        console.log('here is the response:', response);
+        console.log('Response for encryptMessage:', response);
         this.setState({active: true, message: response.data});
-        // this.setState({message: response.data});
       })
   }
 
-
   decryptMessage() {
-    console.log('check this', this.state.message)
     axios.post('http://localhost:3000/decrypt', {encryptedMsg: this.state.message})
       .then(response => {
-        console.log('here is the response for decrypt:', response.data);
+        console.log('Response for decryptMessage:', response.data);
         let splitResponse = response.data.split(',');
-        console.log('splitResponse', splitResponse)
-        let date = splitResponse[2]
+        let date = splitResponse[2];
         // let formattedDate = moment(date).format("DD MMM YY").toString();
-        console.log('here da date', date)
-        let name = splitResponse[1]
-        console.log('here da name', name)
-        let fixedMessage = splitResponse[0]
-        this.setState({name: name, message: fixedMessage, expirationDate: date})
-        console.log(this.state)
+        let formattedDate = moment(date).format("ddd MMM YYYY hh:mm:ss [GMT]ZZ [PDT]");  
+        let name = splitResponse[1];
+        let fixedMessage = splitResponse[0];
+        this.setState({name: name, message: fixedMessage, expirationDate: date});
+        this.handleToggle();
       })
   }
   

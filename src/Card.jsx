@@ -14,8 +14,8 @@ const cardForm = (props) => {
     { label: 'Decrypt', onClick: props.decryptMessage },
   ];
 
-  const firstLetter = props.name ? props.name.charAt(0) : 'T';
-
+  const firstLetter = props.name[0] ? props.name.charAt(0) : 'T';
+  
   return (
     <Card className="all-card" style={{ width: '500px' }}>
       <CardTitle
@@ -33,7 +33,6 @@ const cardForm = (props) => {
           label="Expiration date"
           sundayFirstDayOfWeek
           required
-          autoOk
           onChange={props.handleExpirationChange}
           value={props.expirationDate}
         />
