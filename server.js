@@ -27,7 +27,7 @@ app.post('/decrypt', function(req,res) {
   if(checkExpirationDate(decryptedStr)) {
     res.send(decryptedStr);
   } else {
-    res.send('Error');
+    res.send('Error!');
   }
 })
 

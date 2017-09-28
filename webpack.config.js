@@ -46,6 +46,14 @@ module.exports = {
               use: [
                   'xml-loader'
               ]
+          }, 
+          {
+            test: /\.js$/,
+            include: [
+              path.resolve(__dirname, 'dist')
+            ],
+            loader: 'eslint',
+            exclude: /node_modules/
           }
       ]
     },
