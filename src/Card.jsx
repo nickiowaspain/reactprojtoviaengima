@@ -14,7 +14,7 @@ const cardForm = (props) => {
     { label: 'Decrypt', onClick: props.decryptMessage },
   ];
 
-  const firstLetter = props.name[0] ? props.name.charAt(0) : 'T';
+  const firstLetter = props.name[0] ? props.name.charAt(0).toUpperCase() : 'T';
   
   return (
     <Card className="all-card" style={{ width: '500px' }}>
